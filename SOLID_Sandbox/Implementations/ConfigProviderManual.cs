@@ -4,21 +4,21 @@ namespace SOLID_Sandbox.Implementations
 {
     public class ConfigProviderManual : IConfigProvider
     {
-        private readonly IMessageWriter mWriter;
-        private readonly IMessageReader mReader;
+        private readonly IMessageWriter _writer;
+        private readonly IMessageReader _reader;
 
         public ConfigProviderManual(IMessageWriter writer, IMessageReader reader)
         {
-            mWriter = writer;
-            mReader = reader;
+            _writer = writer;
+            _reader = reader;
         }
 
         public int GetGuessCount()
         {
-            mWriter.Write(string.Empty);
-            mWriter.Write("Введите максимальное число попыток: ", false);
+            _writer.WriteEmptyLine();
+            _writer.Write("Введите максимальное число попыток: ", false);
 
-            if (int.TryParse(mReader.Read(), out int input))
+            if (int.TryParse(_reader.Read(), out int input))
                 return input;
             else
                 return 5;
@@ -26,10 +26,10 @@ namespace SOLID_Sandbox.Implementations
 
         public int GetMax()
         {
-            mWriter.Write(string.Empty);
-            mWriter.Write("Введите максимальное загадываемое число: ", false);
+            _writer.WriteEmptyLine();
+            _writer.Write("Введите максимальное загадываемое число: ", false);
 
-            if (int.TryParse(mReader.Read(), out int input))
+            if (int.TryParse(_reader.Read(), out int input))
                 return input;
             else
                 return int.MaxValue;
@@ -37,10 +37,10 @@ namespace SOLID_Sandbox.Implementations
 
         public int GetMin()
         {
-            mWriter.Write(string.Empty);
-            mWriter.Write("Введите минимальное загадываемое число: ", false);
+            _writer.WriteEmptyLine();
+            _writer.Write("Введите минимальное загадываемое число: ", false);
 
-            if (int.TryParse(mReader.Read(), out int input))
+            if (int.TryParse(_reader.Read(), out int input))
                 return input;
             else
                 return 0;

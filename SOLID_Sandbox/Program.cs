@@ -29,7 +29,7 @@ namespace SOLID_Sandbox
 
             var consoleProvider = new ConsoleProvider();
             var random = new SimpleRandomGenerator();
-            var config = new ConfigProviderManual(consoleProvider, consoleProvider);
+            var config = new ConfigProviderManual(writer: consoleProvider, reader: consoleProvider);
 
             //IGameEngineBase game = new GameDigitGuesser(consoleProvider, consoleProvider, random);
             IGameEngine game = new GameDigitGuesserConfigurable(consoleProvider, consoleProvider, random, config);

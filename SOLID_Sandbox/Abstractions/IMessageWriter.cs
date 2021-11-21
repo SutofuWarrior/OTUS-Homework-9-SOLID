@@ -3,5 +3,6 @@
     public interface IMessageWriter
     {
         void Write(string message, bool newLine = true);
+        void WriteEmptyLine();
     }
 }

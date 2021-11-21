@@ -4,17 +4,17 @@ namespace SOLID_Sandbox
 {
     public class GameDigitGuesser : IGameEngine
     {
-        private readonly IMessageWriter mWriter;
-        private readonly IMessageReader mReader;
-        private readonly IRandomGenerator mRandom;
+        private readonly IMessageWriter _writer;
+        private readonly IMessageReader _reader;
+        private readonly IRandomGenerator _random;
 
-        protected int mMin = 0, mMax = 10, mMaxGuessCount = 5;
+        protected int _min = 0, _max = 10, _maxGuessCount = 5;
 
         public GameDigitGuesser(IMessageWriter writer, IMessageReader reader, IRandomGenerator random)
         {
-            mWriter = writer;
-            mRandom = random;
-            mReader = reader;
+            _writer = writer;
+            _random = random;
+            _reader = reader;
         }
 
         /// <summary>
@@ -34,38 +34,38 @@ namespace SOLID_Sandbox
         /// </summary>
         private void MainMenuInteraction()
         {
-            const string cStart = "1";
-            const string cAbout = "2";
-            const string cQuit = "0";
+            const string StartKey = "1";
+            const string AboutKey = "2";
+            const string QuitKey = "0";
 
             string key;
 
             do
             {
-                mWriter.Write(">>> ", false);
-                key = mReader.Read();
+                _writer.Write(">>> ", false);
+                key = _reader.Read();
 
                 switch (key)
                 {
-                    case cStart:
+                    case StartKey:
                         Play();
                         ShowMainMenu();
                         break;
 
-                    case cAbout:
+                    case AboutKey:
                         WriteIntro();
                         break;
 
-                    case cQuit:
+                    case QuitKey:
                         break;
                 }
 
-            } while (key != cQuit);
+            } while (key != QuitKey);
         }
 
         private void Play()
         {
-            const string cQuit = "Q";
+            const string QuitKey = "Q";
 
             int digit = GetRandomDigit();
 
@@ -75,28 +75,28 @@ namespace SOLID_Sandbox
 
             bool quit, valid;
 
-            mWriter.Write("Число загадано. Попробуйте угадать!");
-            mWriter.Write($"Или введите {cQuit}, чтобы выйти.");
+            _writer.Write("Число загадано. Попробуйте угадать!");
+            _writer.Write($"Или введите {QuitKey}, чтобы выйти.");
 
             do
             {
-                if (guessCount >= mMaxGuessCount)
+                if (guessCount >= _maxGuessCount)
                 {
-                    mWriter.Write($"Вы исчерпали лимит попыток, увы. Правильный ответ: {digit}");
+                    _writer.Write($"Вы исчерпали лимит попыток, увы. Правильный ответ: {digit}");
                     return;
                 }
 
-                mWriter.Write("Ваше число: ", false);
-                input = mReader.Read();
+                _writer.Write("Ваше число: ", false);
+                input = _reader.Read();
 
-                (quit, valid, guess) = Validate(input, cQuit);
+                (quit, valid, guess) = Validate(input, QuitKey);
 
                 if (quit)
                     return;
 
                 if (!valid)
                 {
-                    mWriter.Write("Это же вообще не число!");
+                    _writer.Write("Это же вообще не число!");
                     continue;
                 }
 
@@ -108,9 +108,9 @@ namespace SOLID_Sandbox
                     return;
                 }
                 else if (guess < digit)
-                    mWriter.Write("Не угадали. Ваше число меньше, чем загаданное");
+                    _writer.Write("Не угадали. Ваше число меньше, чем загаданное");
                 else
-                    mWriter.Write("Не угадали. Ваше число больше, чем загаданное");
+                    _writer.Write("Не угадали. Ваше число больше, чем загаданное");
 
             } while (true);
         }
@@ -134,35 +134,35 @@ namespace SOLID_Sandbox
 
         protected virtual void WriteStartMessage()
         {
-            mWriter.Write("Игра начинается!");
-            mWriter.Write(string.Empty);
+            _writer.Write("Игра начинается!");
+            _writer.WriteEmptyLine();
         }
 
         protected virtual void WriteIntro()
         {
-            mWriter.Write("Игра загадывает число, а вы должны это число угадать.");
-            mWriter.Write("Если попытка не верная, игра скажет, введённое число больше или меньше отгадываемого.");
-            mWriter.Write("Чем меньше попыток - тем лучше! Вперёд!");
-            mWriter.Write(string.Empty);
+            _writer.Write("Игра загадывает число, а вы должны это число угадать.");
+            _writer.Write("Если попытка не верная, игра скажет, введённое число больше или меньше отгадываемого.");
+            _writer.Write("Чем меньше попыток - тем лучше! Вперёд!");
+            _writer.WriteEmptyLine();
         }
 
         protected virtual void ShowMainMenu()
         {
-            mWriter.Write("1 - Начать игру");
-            mWriter.Write("2 - Об игре");
-            mWriter.Write("0 - Выход");
-            mWriter.Write(string.Empty);
+            _writer.Write("1 - Начать игру");
+            _writer.Write("2 - Об игре");
+            _writer.Write("0 - Выход");
+            _writer.WriteEmptyLine();
         }
 
         protected virtual void ShowWinnerMessage(int count)
         {
-            mWriter.Write($"ВЕРНО! Вы угадали число за {count} попыток");
-            mWriter.Write("Сыграем ещё раз? :)");
-            mWriter.Write(string.Empty);
+            _writer.Write($"ВЕРНО! Вы угадали число за {count} попыток");
+            _writer.Write("Сыграем ещё раз? :)");
+            _writer.WriteEmptyLine();
         }
 
         private int GetRandomDigit()
-            => mRandom.GetNext(mMin, mMax);
+            => _random.GetNext(_min, _max);
 
     }
 }

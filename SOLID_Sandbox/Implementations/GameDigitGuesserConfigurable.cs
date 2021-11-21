@@ -4,7 +4,7 @@ namespace SOLID_Sandbox
 {
     public class GameDigitGuesserConfigurable : GameDigitGuesser
     {
-        private readonly IConfigProvider mConfigurator;
+        private readonly IConfigProvider _configurator;
 
         public GameDigitGuesserConfigurable(
             IMessageWriter writer, 
@@ -13,22 +13,22 @@ namespace SOLID_Sandbox
             IConfigProvider configurator)
             : base (writer, reader, random)
         {
-            mConfigurator = configurator;
+            _configurator = configurator;
             Setup();
         }
 
         protected void Setup()
         {
-            mMin = mConfigurator.GetMin();
-            mMax = mConfigurator.GetMax();
+            _min = _configurator.GetMin();
+            _max = _configurator.GetMax();
 
-            if (mMin > mMax)
-                mMin = mMax;
+            if (_min > _max)
+                _min = _max;
 
-            mMaxGuessCount = mConfigurator.GetGuessCount();
+            _maxGuessCount = _configurator.GetGuessCount();
 
-            if (mMaxGuessCount <= 0)
-                mMaxGuessCount = 1;
+            if (_maxGuessCount <= 0)
+                _maxGuessCount = 1;
         }
     }
 }

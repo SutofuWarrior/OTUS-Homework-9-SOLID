@@ -7,7 +7,7 @@ namespace SOLID_Sandbox.Implementations
     {
         public int GetNext(int min, int max)
         {
-            var rnd = new Random(DateTime.Now.Millisecond);
+            var rnd = new Random();
             return rnd.Next(min, max);
         }
     }

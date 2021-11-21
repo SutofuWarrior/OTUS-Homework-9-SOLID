@@ -13,6 +13,11 @@ namespace SOLID_Sandbox.Implementations
                 Console.Write(message);
         }
 
+        public void WriteEmptyLine()
+        {
+            Console.WriteLine();
+        }
+
         public string Read()
         {
             return Console.ReadLine();
